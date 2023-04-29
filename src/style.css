@@ -9,10 +9,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
+  min-width: 40px;
   height: 40px;
   border: 1px solid #ccc;
   margin: 2px;
   font-size: 20px;
   cursor: pointer;
+}
+
+.key-grow {
+  flex-grow: 1;
+}
+
+.key-grow2 {
+  flex-grow: 1.23;
+}
+
+.row {
+  display: flex;
+  min-width: 700px;
 }
