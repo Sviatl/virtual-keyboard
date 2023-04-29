@@ -1,7 +1,13 @@
-import listOfKeys from './list-of-keys';
 import Key from './key';
 
-class Keyboard {
+const listOfKeys = [
+  ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+  ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+  ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'],
+  ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+];
+
+export default class Keyboard {
   constructor(parent, textarea) {
     this.parent = parent;
     this.textarea = textarea;
@@ -29,5 +35,3 @@ class Keyboard {
     this.value = 1;
   }
 }
-
-export default { Keyboard };

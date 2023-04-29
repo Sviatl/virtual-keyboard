@@ -1,4 +1,4 @@
-class Key {
+export default class Key {
   constructor(key, callback) {
     this.key = key;
     this.callback = callback;
@@ -14,4 +14,3 @@ class Key {
     parent.appendChild(this.element);
   }
 }
-export default { Key };
