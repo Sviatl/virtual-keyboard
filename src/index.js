@@ -1,19 +1,4 @@
-class Key {
-  constructor(key, callback) {
-    this.key = key;
-    this.callback = callback;
-    this.element = document.createElement('div');
-    this.element.className = 'key';
-    this.element.textContent = this.key;
-    this.element.addEventListener('click', () => {
-      this.callback(this.key);
-    });
-  }
-
-  render(parent) {
-    parent.appendChild(this.element);
-  }
-}
+import Key from './components/key';
 
 const listOfKeys = [
   ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
@@ -55,5 +40,3 @@ const myKeyboard = document.getElementById('keyboard');
 const mytext = document.getElementById('text');
 const keyb = new Keyboard(myKeyboard, mytext);
 keyb.click();
-
-console.log(1);

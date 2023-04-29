@@ -1,5 +1,5 @@
-import listOfKeys from './list-of-keys.js';
-import Key from './key.js';
+import listOfKeys from './list-of-keys';
+import Key from './key';
 
 class Keyboard {
   constructor(parent, textarea) {
