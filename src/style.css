@@ -1,8 +1,24 @@
 #keyboard {
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
-  margin: 0 auto;
+  width: 700px;
+}
+
+#text {
+  margin-top: 100px;
+  width: 700px;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
 }
 
 .key {
@@ -15,6 +31,20 @@
   margin: 2px;
   font-size: 20px;
   cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), -1px -1px 1px rgba(255, 255, 255, 0.7) inset;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.key:hover {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), -1px -1px 5px rgba(255, 255, 255, 0.7) inset;
+  transform: translate(1px, 1px);
+  background-color: pink;
+}
+
+.key:active {
+  box-shadow: none;
+  transform: translate(1px, 1px);
+  background-color: pink;
 }
 
 .key-grow {
@@ -22,10 +52,10 @@
 }
 
 .key-grow2 {
-  flex-grow: 1.23;
+  flex-grow: 1.95;
 }
 
 .row {
   display: flex;
-  min-width: 700px;
+  flex-grow: 1;
 }
