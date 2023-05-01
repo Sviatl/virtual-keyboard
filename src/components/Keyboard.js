@@ -41,10 +41,10 @@ const listOfKeys = [
     key: '=', upkey: '+', upkeyLang: '+', code: 'Equal',
   },
   {
-    key: 'Backspace', upkey: 'Backspace', grow: true, isSpecial: true, code: 'Backspace',
+    key: 'Backspace', upkey: 'Backspace', upkeyLang: 'Backspace', grow: true, isSpecial: true, code: 'Backspace',
   }],
   [{
-    key: 'Tab', upkey: 'Tab', grow: true, isSpecial: true, code: 'Tab',
+    key: 'Tab', upkey: 'Tab', upkeyLang: 'Tab', grow: true, isSpecial: true, code: 'Tab',
   },
   { key: 'q', keyLang: 'й', code: 'KeyQ' },
   { key: 'w', keyLang: 'ц', code: 'KeyW' },
@@ -66,10 +66,10 @@ const listOfKeys = [
     key: '\\', upkey: '|', keyLang: '\\', upkeyLang: '/', code: 'Backslash',
   },
   {
-    key: 'Del', upkey: 'Del', isSpecial: true, code: 'Delete',
+    key: 'Del', upkey: 'Del', upkeyLang: 'Del', isSpecial: true, code: 'Delete',
   }],
   [{
-    key: 'Capslock', upkey: 'Capslock', grow: true, isSpecial: true, code: 'CapsLock',
+    key: 'Capslock', upkey: 'Capslock', upkeyLang: 'Capslock', grow: true, isSpecial: true, code: 'CapsLock',
   },
   { key: 'a', keyLang: 'ф', code: 'KeyA' },
   { key: 's', keyLang: 'ы', code: 'KeyS' },
@@ -87,10 +87,10 @@ const listOfKeys = [
     key: '\'', upkey: '"', keyLang: 'э', code: 'Quote',
   },
   {
-    key: 'Enter', upkey: 'Enter', grow: true, isSpecial: true, code: 'Enter',
+    key: 'Enter', upkey: 'Enter', upkeyLang: 'Enter', grow: true, isSpecial: true, code: 'Enter',
   }],
   [{
-    key: 'Shift', upkey: 'Shift', grow2: true, code: 'ShiftLeft', isFunctional: true,
+    key: 'Shift', upkey: 'Shift', upkeyLang: 'Shift', grow2: true, code: 'ShiftLeft', isFunctional: true,
   },
   { key: 'z', keyLang: 'я', code: 'KeyZ' },
   { key: 'x', keyLang: 'ч', code: 'KeyX' },
@@ -110,28 +110,28 @@ const listOfKeys = [
   },
   { key: '▲', code: 'ArrowUp', isArrow: true },
   {
-    key: 'Shift', upkey: 'Shift', grow: true, code: 'ShiftRight', isFunctional: true,
+    key: 'Shift', upkey: 'Shift', upkeyLang: 'Shift', grow: true, code: 'ShiftRight', isFunctional: true,
   }],
   [{
-    key: 'Ctrl', upkey: 'Ctrl', code: 'ControlLeft', isFunctional: true,
+    key: 'Ctrl', upkey: 'Ctrl', upkeyLang: 'Ctrl', code: 'ControlLeft', isFunctional: true,
   },
   {
-    key: 'Win', upkey: 'Win', code: 'MetaLeft', isFunctional: true,
+    key: 'Win', upkey: 'Win', upkeyLang: 'Win', code: 'MetaLeft', isFunctional: true,
   },
   {
-    key: 'Alt', upkey: 'Alt', code: 'AltLeft', isFunctional: true,
+    key: 'Alt', upkey: 'Alt', upkeyLang: 'Alt', code: 'AltLeft', isFunctional: true,
   },
   {
-    key: 'Space', upkey: 'Space', grow: true, code: 'Space',
+    key: 'Space', upkey: 'Space', upkeyLang: 'Space', grow: true, code: 'Space',
   },
   {
-    key: 'Alt', upkey: 'Alt', code: 'AltRight', isFunctional: true,
+    key: 'Alt', upkey: 'Alt', upkeyLang: 'Alt', code: 'AltRight', isFunctional: true,
   },
   { key: '◄', code: 'ArrowLeft', isArrow: true },
   { key: '▼', code: 'ArrowDown', isArrow: true },
   { key: '►', code: 'ArrowRight', isArrow: true },
   {
-    key: 'Ctrl', upkey: 'Ctrl', code: 'ControlRight', isFunctional: true,
+    key: 'Ctrl', upkey: 'Ctrl', upkeyLang: 'Ctrl', code: 'ControlRight', isFunctional: true,
   }],
 ];
 
@@ -160,11 +160,6 @@ export default class Keyboard {
   handleKey(key) {
     let currentSymbol = key.element.textContent;
     const countOfSymbolsToAdd = 1;
-    // const isShift = this.shift;
-    // if (this.shift) {
-    //   this.shift = false;
-    //   this.renderKeyboard();
-    // }
     if (key.code === 'CapsLock') {
       if (this.capsLock) {
         this.capsLock = false;
@@ -277,7 +272,7 @@ export default class Keyboard {
   renderKeyboard() {
     this.keys.forEach((key) => {
       const currentKey = key;
-      currentKey.change(this.shift, this.capsLock);
+      currentKey.change(this.shift, this.capsLock, this.notEnglish);
     });
   }
 

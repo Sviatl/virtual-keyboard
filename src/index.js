@@ -1,7 +1,7 @@
 import './style.css';
 import Keyboard from './components/keyboard';
 
-const notEnglish = localStorage.getItem('notEnglish');
+let notEnglish = localStorage.getItem('notEnglish');
 
 const h1 = document.createElement('h1');
 h1.innerHTML = 'RSS Виртуальная клавиатура';
@@ -26,6 +26,16 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
   event.preventDefault();
   keyb.unclick(event.code);
+  if ((event.code === 'AltLeft' && event.ctrlKey) || (event.code === 'ControlLeft' && event.altKey)) {
+    if (notEnglish) {
+      notEnglish = false;
+    } else {
+      notEnglish = true;
+    }
+    keyb.notEnglish = notEnglish;
+    localStorage.setItem('notEnglish', notEnglish);
+    keyb.renderKeyboard();
+  }
 });
 
 const div1 = document.createElement('div');
@@ -33,5 +43,5 @@ div1.innerHTML = 'Клавиатура создана в операционно�
 document.body.appendChild(div1);
 
 const div2 = document.createElement('div');
-div2.innerHTML = 'Для переключения языка нужно нажать: левыe ctrl + alt';
+div2.innerHTML = 'Для переключения языка нужно нажать: левый Ctrl + любой Alt или левый Alt + любой Ctrl';
 document.body.appendChild(div2);

@@ -13,9 +13,9 @@ export default class Key {
       this.keyLang = key.keyLang;
     }
     if (key.upkeyLang === undefined) {
-      this.upkeyLang = this.keyLang;
+      this.upkeyLang = this.keyLang.toUpperCase();
     } else {
-      this.upkey = key.upkeyLang;
+      this.upkeyLang = key.upkeyLang;
     }
     this.code = key.code;
     this.callback = callback;
@@ -57,17 +57,23 @@ export default class Key {
     parent.appendChild(this.element);
   }
 
-  change(shift, capsLock) {
+  change(shift, capsLock, notEnglish) {
+    let { key } = this;
+    let { upkey } = this;
+    if (notEnglish) {
+      key = this.keyLang;
+      upkey = this.upkeyLang;
+    }
     if (capsLock) {
       if (shift) {
-        this.element.textContent = this.key;
+        this.element.textContent = key;
       } else {
-        this.element.textContent = this.upkey;
+        this.element.textContent = upkey;
       }
     } else if (shift) {
-      this.element.textContent = this.upkey;
+      this.element.textContent = upkey;
     } else {
-      this.element.textContent = this.key;
+      this.element.textContent = key;
     }
   }
 
