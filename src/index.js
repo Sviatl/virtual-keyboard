@@ -27,10 +27,10 @@ document.addEventListener('keyup', (event) => {
   event.preventDefault();
   keyb.unclick(event.code);
   if ((event.code === 'AltLeft' && event.ctrlKey) || (event.code === 'ControlLeft' && event.altKey)) {
-    if (notEnglish) {
-      notEnglish = false;
+    if (notEnglish === 'true') {
+      notEnglish = 'false';
     } else {
-      notEnglish = true;
+      notEnglish = 'true';
     }
     keyb.notEnglish = notEnglish;
     localStorage.setItem('notEnglish', notEnglish);

@@ -33,7 +33,7 @@ export default class Key {
     if (key.grow2) {
       this.element.classList.add('key-grow2');
     }
-    if (this.notEnglish) {
+    if (this.notEnglish === 'true') {
       this.element.textContent = this.keyLang;
     } else {
       this.element.textContent = this.key;
@@ -50,6 +50,7 @@ export default class Key {
   unclick() {
     this.element.classList.remove('key-active');
     const event = new Event('click');
+    event.ignoreShift = true;
     this.element.dispatchEvent(event);
   }
 
@@ -60,7 +61,7 @@ export default class Key {
   change(shift, capsLock, notEnglish) {
     let { key } = this;
     let { upkey } = this;
-    if (notEnglish) {
+    if (notEnglish === 'true') {
       key = this.keyLang;
       upkey = this.upkeyLang;
     }
