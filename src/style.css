@@ -1,0 +1,74 @@
+* {
+  box-sizing: inherit;
+}
+
+#text {
+  margin-top: 20px;
+  width: 700px;
+  font-size: 18px;
+}
+
+#keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  width: 700px;
+  margin-bottom: 20px;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: "Trebuchet MS", "Helvetica", sans-serif;
+  color: #483D8B;
+}
+
+.key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
+  margin: 2px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: white;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2), -1px -1px 1px rgba(255, 255, 255, 0.7) inset;
+  transition: box-shadow 0.2s, transform 0.2s;
+  user-select: none;
+}
+
+.key:hover {
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3), -1px -1px 5px rgba(255, 255, 255, 0.7) inset;
+  transform: translate(1px, 1px);
+  background-color: pink;
+}
+
+.key-functional {
+  background-color: #E8E8E8;
+}
+
+.key:active,
+.key-active {
+  box-shadow: none;
+  transform: translate(1px, 1px);
+  background-color: pink;
+}
+
+.key-grow {
+  flex-grow: 1;
+}
+
+.key-grow2 {
+  flex-grow: 1.95;
+}
+
+.row {
+  display: flex;
+  flex-grow: 1;
+}
