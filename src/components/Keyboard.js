@@ -121,7 +121,9 @@ const listOfKeys = [
   {
     key: 'Alt', upkey: 'Alt', code: 'AltLeft', isFunctional: true,
   },
-  { key: 'Space', grow: true, code: 'Space' },
+  {
+    key: 'Space', upkey: 'Space', grow: true, code: 'Space',
+  },
   {
     key: 'Alt', upkey: 'Alt', code: 'AltRight', isFunctional: true,
   },
@@ -134,7 +136,8 @@ const listOfKeys = [
 ];
 
 export default class Keyboard {
-  constructor(parent, textarea) {
+  constructor(parent, textarea, notEnglish) {
+    this.notEnglish = notEnglish;
     this.parent = parent;
     this.textarea = textarea;
     this.keys = [];
@@ -144,7 +147,7 @@ export default class Keyboard {
       rowElem.className = 'row';
 
       row.forEach((key) => {
-        const keyObj = new Key(key, this.handleKey.bind(this));
+        const keyObj = new Key(key, this.handleKey.bind(this), notEnglish);
         this.keys.push(keyObj);
         keyObj.render(rowElem);
       });
@@ -156,33 +159,110 @@ export default class Keyboard {
 
   handleKey(key) {
     let currentSymbol = key.element.textContent;
-    if (currentSymbol === 'Space') {
+    const countOfSymbolsToAdd = 1;
+    // const isShift = this.shift;
+    // if (this.shift) {
+    //   this.shift = false;
+    //   this.renderKeyboard();
+    // }
+    if (key.code === 'CapsLock') {
+      if (this.capsLock) {
+        this.capsLock = false;
+        key.pressed(false);
+      } else {
+        this.capsLock = true;
+        key.pressed(true);
+      }
+      this.renderKeyboard();
+    } else if (key.code === 'ShiftLeft' && this.shift && this.codePressed === 'ShiftRight') {
+      const resultKey = this.keys.find((obj) => obj.code === 'ShiftRight');
+      if (resultKey !== undefined) {
+        this.shift = false;
+        resultKey.pressed(false);
+        this.codePressed = undefined;
+      }
+    } else if (key.code === 'ShiftRight' && this.shift && this.codePressed === 'ShiftLeft') {
+      const resultKey = this.keys.find((obj) => obj.code === 'ShiftLeft');
+      if (resultKey !== undefined) {
+        this.shift = false;
+        resultKey.pressed(false);
+        this.codePressed = undefined;
+      }
+    } else if (key.code === 'MetaLeft') {
+      const event = new KeyboardEvent('keydown', { key: 'Meta', code: 'OSLeft' });
+      document.dispatchEvent(event);
+      const event2 = new KeyboardEvent('keyup', { key: 'Meta', code: 'OSLeft' });
+      document.dispatchEvent(event2);
+    } else if (currentSymbol === 'Space') {
       currentSymbol = ' ';
+    } else if (currentSymbol === 'Enter') {
+      currentSymbol = '\n';
+    } else if (currentSymbol === 'Tab') {
+      currentSymbol = '\t';
     }
     const { selectionStart } = this.textarea;
-    if (key.isFunctional) {
-      this.resetRestOtherFunctional(key.code);
+    if (key.isFunctional || key.code === 'CapsLock') {
+      // this.resetRestOtherFunctional(key.code);
       if (key.code === 'ShiftLeft' || key.code === 'ShiftRight') {
         if (this.shift) {
           this.shift = false;
           key.pressed(false);
+          this.codePressed = undefined;
         } else {
           this.shift = true;
+          this.codePressed = key.code;
           key.pressed(true);
         }
         this.renderKeyboard();
       }
+    } else if (currentSymbol === 'Backspace') {
+      if (selectionStart !== 0) {
+        const chars = this.textarea.value.split('');
+        chars.splice(selectionStart - 1, 1);
+        this.textarea.value = chars.join('');
+        this.textarea.setSelectionRange(
+          selectionStart - 1,
+          selectionStart - 1,
+        );
+        this.textarea.focus();
+      }
+    } else if (currentSymbol === 'Del') {
+      const chars = this.textarea.value.split('');
+      chars.splice(selectionStart, 1);
+      this.textarea.value = chars.join('');
+      this.textarea.setSelectionRange(
+        selectionStart,
+        selectionStart,
+      );
+      this.textarea.focus();
     } else {
       const chars = this.textarea.value.split('');
       chars.splice(selectionStart, 0, currentSymbol);
       this.textarea.value = chars.join('');
-      this.textarea.setSelectionRange(selectionStart + 1, selectionStart + 1);
+      this.textarea.setSelectionRange(
+        selectionStart + countOfSymbolsToAdd,
+        selectionStart + countOfSymbolsToAdd,
+      );
       this.textarea.focus();
       this.resetRestOtherFunctional(key.code);
       if (this.shift) {
         this.shift = false;
         this.renderKeyboard();
       }
+    }
+    if (key.code !== 'ShiftLeft' && key.code !== 'ShiftRight' && this.shift) {
+      this.shift = false;
+      let resultKey = this.keys.find((obj) => obj.code === 'ShiftLeft');
+      if (resultKey !== undefined) {
+        resultKey.pressed(false);
+        this.codePressed = undefined;
+      }
+      resultKey = this.keys.find((obj) => obj.code === 'ShiftRight');
+      if (resultKey !== undefined) {
+        resultKey.pressed(false);
+        this.codePressed = undefined;
+      }
+      this.renderKeyboard();
     }
   }
 
@@ -197,15 +277,21 @@ export default class Keyboard {
   renderKeyboard() {
     this.keys.forEach((key) => {
       const currentKey = key;
-      currentKey.change(this.shift);
+      currentKey.change(this.shift, this.capsLock);
     });
   }
 
   click(code) {
-    // this.value = code;
     const resultKey = this.keys.find((obj) => obj.code === code);
     if (resultKey !== undefined) {
       resultKey.click();
+    }
+  }
+
+  unclick(code) {
+    const resultKey = this.keys.find((obj) => obj.code === code);
+    if (resultKey !== undefined) {
+      resultKey.unclick();
     }
   }
 }
