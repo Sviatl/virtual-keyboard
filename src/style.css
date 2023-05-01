@@ -1,3 +1,7 @@
+* {
+  box-sizing: inherit;
+}
+
 #keyboard {
   display: flex;
   flex-wrap: wrap;
@@ -21,10 +25,6 @@ body {
   box-sizing: border-box;
   font-family: "Trebuchet MS", "Helvetica", sans-serif;
   color: #483D8B;
-}
-
-* {
-  box-sizing: inherit;
 }
 
 .key {
